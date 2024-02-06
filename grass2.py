@@ -32,6 +32,7 @@ def main(stdscr):
     grey3 = 6
     grey4 = 6
     while True:
+        #main game loop
         stdscr.clear()
         stdscr.addstr(lines, cols, "#_#_#_#_#", curses.color_pair(colo)| curses.A_UNDERLINE | curses.A_BOLD)
         stdscr.addstr(lines - 5, cols + 4, str(points), curses.color_pair(22)| curses.A_BOLD) 
@@ -66,9 +67,11 @@ def main(stdscr):
                 break
             time.sleep(random.randint(1, 3))
         flum = stdscr.getch()
+        #Cuts grass
         if flum == curses.KEY_BACKSPACE:
             points = points + 1
             continue
+        # Opens skins menu
         elif flum == ord('c'):
             stdscr.clear()
             stdscr.addstr(lines, cols, "green", curses.color_pair(1) | curses.A_BOLD)
@@ -79,6 +82,7 @@ def main(stdscr):
                 colo = 1
             elif burger == ord('q'):
                 continue
+        # opens shop
         elif flum == ord('s'):
             fortnite = 0 
             grey1 = 6
@@ -106,6 +110,7 @@ def main(stdscr):
             stdscr.addstr(lines + 3, cols, "white - 150", curses.color_pair(grey4) | curses.A_BOLD)
             stdscr.move(lines, cols)
             stdscr.refresh()
+            # move up and down and close shop
             while fortnite != ord('q'):
                 fortnite  = stdscr.getch()
                 if fortnite == ord('w'):
@@ -120,6 +125,7 @@ def main(stdscr):
                         continue
                     else:
                         stdscr.move(y + 1, x)
+                # choose color
                 if fortnite == ord('e'):
                     y, x = stdscr.getyx()
                     if y == lines and points >= 10:
