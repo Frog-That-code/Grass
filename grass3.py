@@ -19,11 +19,13 @@ curses.init_pair(7, curses.COLOR_BLACK, curses.COLOR_BLACK)
 lines = curses.LINES // 2
 cols = curses.COLS // 2
 
-
-
-
 def main(stdscr):
-    points = 85
+    saveFile = open("saveFile.txt", "a+")
+    saveFile.close()
+    saveFile = open("saveFile.txt", "r")
+    data = saveFile.readlines()
+    points = int(data[0])
+    saveFile.close()
     colo = 1
     fortnite = 0
     grey1 = 6
@@ -42,7 +44,7 @@ def main(stdscr):
         stdscr.addstr(lines - 5, cols + 4, str(points), curses.color_pair(22)| curses.A_BOLD) 
         stdscr.refresh()
         time.sleep(random.randint(1, 5))
-        while grass[3][0] != "#" and grass[3][1] != "#" and grass[3][2] != "#" and grass[3][3] != "#" and grass[3][4] != "#": 
+        while True: 
             for i in range(len(grass)):
                 for e in range(5):
                     if grass[i][e] == " ":
@@ -60,6 +62,8 @@ def main(stdscr):
             stdscr.addstr(curses.LINES // 2 - 4, curses.COLS // 2, gr3, curses.color_pair(colo) | curses.A_BOLD)
             stdscr.refresh()
             time.sleep(random.randint(1, 5))
+            if grass[3][0] == "#" and grass[3][1] == "#" and grass[3][2] == "#" and grass[3][3] == "#" and grass[3][4] == "#":
+                break
         stdscr.addstr(lines + 1, cols + 1, "[s] - Shop, [Backspace] - Cut grass, [c] - Skins")
         stdscr.refresh()
         flum = stdscr.getch()
@@ -74,20 +78,14 @@ def main(stdscr):
             magenta1 = 7
             cyan1 = 7
             white1 = 7
-            if yellow == 1 and magenta == 1 and cyan == 1 and white == 1:
-                yellow1 = 2
-                magenta1 = 3
-                cyan1 = 4
+            if white == 1:
                 white1 = 5
-            elif magenta == 1 and yellow == 1 and cyan == 1:
-                magenta1 = 3
-                yellow1 = 2
+            if cyan == 1:
                 cyan1 = 4
-            elif yellow == 1 and magenta == 1:
+            if magenta == 1:
                 magenta1 = 3
+            if yellow == 1:
                 yellow1 = 2
-            elif yellow == 1:
-                yellow1 = 1
             stdscr.clear()
             stdscr.addstr(lines, cols, "green", curses.color_pair(1) | curses.A_BOLD)
             stdscr.addstr(lines + 1, cols, "yellow", curses.color_pair(yellow1) | curses.A_BOLD)
@@ -178,28 +176,33 @@ def main(stdscr):
                 # choose color
                 if fortnite == ord('e'):
                     y, x = stdscr.getyx()
-                    if y == lines and points >= 10:
+                    if y == lines and points >= 10 and yellow != 1:
                         colo = 2
                         yellow = 1
                         points = points - 10
                         break
-                    elif y == lines + 1 and points >= 25:
+                    elif y == lines + 1 and points >= 25 and magenta != 1:
                         colo = 3
                         magenta = 1
                         points = points - 25
                         break
-                    elif y == lines + 2 and points >= 50:
+                    elif y == lines + 2 and points >= 50 and cyan != 1:
                         colo = 4
                         cyan = 1
                         points = points - 50
                         break
-                    elif y == lines + 3 and points >= 150:
+                    elif y == lines + 3 and points >= 150 and white != 1:
                         colo = 5
                         white = 1
                         points = points - 150
                         break
             continue
         else:
+            saveFile = open("saveFile.txt", "w+")
+            saveFile.seek(0)
+            saveFile.truncate()
+            saveFile.write(str(points) + "\n")
+            saveFile.close()
             break
 
 wrapper(main)
