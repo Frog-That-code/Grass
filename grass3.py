@@ -3,8 +3,6 @@ import random
 import curses 
 from curses import wrapper 
 screen = curses.initscr() 
-curses.noecho() 
-screen.keypad(True) 
 curses.start_color() 
 #init colors 
 curses.init_pair(1, curses.COLOR_GREEN, curses.COLOR_BLACK)
@@ -28,22 +26,18 @@ def main(stdscr):
     saveFile.close()
     colo = 1
     fortnite = 0
-    grey1 = 6
-    grey2 = 6
-    grey3 = 6
-    grey4 = 6
     yellow = 0
     magenta = 0
     cyan = 0
     white = 0
     while True:
         #main game loop
+        curses.curs_set(0)
         stdscr.clear()
         grass = [[" "," "," "," "," "],[" "," "," "," "," "],[" "," "," "," "," "],[" "," "," "," "," "]]
         stdscr.addstr(lines, cols, "#_#_#_#_#", curses.color_pair(colo)| curses.A_UNDERLINE | curses.A_BOLD)
         stdscr.addstr(lines - 5, cols + 4, str(points), curses.color_pair(22)| curses.A_BOLD) 
         stdscr.refresh()
-        time.sleep(random.randint(1, 5))
         while True: 
             for i in range(len(grass)):
                 for e in range(5):
@@ -52,6 +46,7 @@ def main(stdscr):
                             beans = random.randint(1, 2)
                             if beans == 1:
                                 grass[i][e] = "#"
+            time.sleep(random.randint(1, 5))
             gr = ' '.join(grass[0])
             gr1 = ' '.join(grass[1])
             gr2 = ' '.join(grass[2])
@@ -61,11 +56,11 @@ def main(stdscr):
             stdscr.addstr(curses.LINES // 2 - 3, curses.COLS // 2, gr2, curses.color_pair(colo) | curses.A_BOLD)
             stdscr.addstr(curses.LINES // 2 - 4, curses.COLS // 2, gr3, curses.color_pair(colo) | curses.A_BOLD)
             stdscr.refresh()
-            time.sleep(random.randint(1, 5))
             if grass[3][0] == "#" and grass[3][1] == "#" and grass[3][2] == "#" and grass[3][3] == "#" and grass[3][4] == "#":
                 break
         stdscr.addstr(lines + 1, cols + 1, "[s] - Shop, [Backspace] - Cut grass, [c] - Skins")
         stdscr.refresh()
+        curses.flushinp()
         flum = stdscr.getch()
         #Cuts grass
         if flum == curses.KEY_BACKSPACE:
@@ -73,6 +68,7 @@ def main(stdscr):
             continue
         # Opens skins menu
         elif flum == ord('c'):
+            curses.curs_set(1)
             fortnite = 0 
             yellow1 = 7
             magenta1 = 7
@@ -131,24 +127,19 @@ def main(stdscr):
             continue
         # opens shop
         elif flum == ord('s'):
+            curses.curs_set(1)
             fortnite = 0 
-            grey1 = 6
-            grey2 = 6
-            grey3 = 6
-            grey4 = 6
+            grey1 = 7
+            grey2 = 7
+            grey3 = 7
+            grey4 = 7
             if points >= 150:
-                grey1 = 1
-                grey2 = 1
-                grey3 = 1
                 grey4 = 1
-            elif points >= 50:
-                grey1 = 1
-                grey2 = 1
+            if points >= 50:
                 grey3 = 1
-            elif points >= 25:
-                grey1 = 1
+            if points >= 25:
                 grey2 = 1
-            elif points >= 10:
+            if points >= 10:
                 grey1 = 1
             stdscr.clear()
             stdscr.addstr(lines, cols, "yellow - 10", curses.color_pair(grey1) | curses.A_BOLD)
