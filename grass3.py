@@ -22,14 +22,30 @@ def main(stdscr):
     saveFile.close()
     saveFile = open("saveFile.txt", "r")
     data = saveFile.readlines()
+    data1 = []
+    for i in range(len(data)):
+        idk = str(data[i])
+        data1.append(idk)
     points = int(data[0])
     saveFile.close()
     colo = 1
     fortnite = 0
-    yellow = 0
-    magenta = 0
-    cyan = 0
-    white = 0
+    if "yellow" in data1:
+        yellow = 1
+    else:
+        yellow = 0
+    if "magenta" in data1:
+        magenta = 1
+    else:
+        magenta = 0
+    if "cyan" in data1:
+        cyan = 1
+    else:
+        cyan = 0
+    if "white" in data1:
+        white = 1
+    else:
+        white = 0
     while True:
         #main game loop
         curses.curs_set(0)
@@ -193,6 +209,14 @@ def main(stdscr):
             saveFile.seek(0)
             saveFile.truncate()
             saveFile.write(str(points) + "\n")
+            if yellow == 1:
+                saveFile.write("yellow\n")
+            if magenta == 1:
+                saveFile.write("magenta\n")
+            if cyan == 1:
+                saveFile.write("cyan\n")
+            if white == 1:
+                saveFile.write("white\n")
             saveFile.close()
             break
 
