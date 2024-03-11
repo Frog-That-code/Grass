@@ -28,7 +28,10 @@ def main(stdscr):
     for i in range(len(data)):
         idk = str(data[i])
         data1.append(idk)
-    points = int(data[0])
+    if not data:
+        points = 0
+    else:
+        points = int(data[0])
     saveFile.close()
     colo = 1
     fortnite = 0
