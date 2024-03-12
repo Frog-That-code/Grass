@@ -31,10 +31,11 @@ def main(stdscr):
         data1.append(idk)
     if not data:
         points = 0
+        colo = 1
     else:
         points = int(data[0])
+        colo = int(data[1])
     saveFile.close()
-    colo = 1
     fortnite = 0
     #check for saved skins
     if "yellow\n" in data1:
@@ -216,6 +217,7 @@ def main(stdscr):
             saveFile.seek(0)
             saveFile.truncate()
             saveFile.write(str(points) + "\n")
+            saveFile.write(str(colo) + "\n")
             if yellow == 1:
                 saveFile.write("yellow\n")
             if magenta == 1:
