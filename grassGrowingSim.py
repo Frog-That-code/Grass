@@ -25,6 +25,7 @@ def main(stdscr):
     saveFile = open("saveFile.txt", "r")
     data = saveFile.readlines()
     data1 = []
+    #gets points from saveFile
     for i in range(len(data)):
         idk = str(data[i])
         data1.append(idk)
@@ -52,9 +53,8 @@ def main(stdscr):
         white = 1
     else:
         white = 0
-
+    #main game loop
     while True:
-        #main game loop
         curses.curs_set(0)
         stdscr.clear()
         grass = [[" "," "," "," "," "],[" "," "," "," "," "],[" "," "," "," "," "],[" "," "," "," "," "]]
@@ -195,17 +195,17 @@ def main(stdscr):
                         yellow = 1
                         points = points - 10
                         break
-                    elif y == lines + 1 and points >= 25 and magenta != 1:
+                    elif y == lines + 1 and points >= 25 and magenta != 1 and yellow == 1:
                         colo = 3
                         magenta = 1
                         points = points - 25
                         break
-                    elif y == lines + 2 and points >= 50 and cyan != 1:
+                    elif y == lines + 2 and points >= 50 and cyan != 1 and magenta == 1:
                         colo = 4
                         cyan = 1
                         points = points - 50
                         break
-                    elif y == lines + 3 and points >= 150 and white != 1:
+                    elif y == lines + 3 and points >= 150 and white != 1 and cyan == 1:
                         colo = 5
                         white = 1
                         points = points - 150
